@@ -1,69 +1,58 @@
-import {useState } from "react"
-function RobuverseRental(){
-  
-  return(
-  <>
-    <h1>Robuverse</h1>
-    <p>Future Of Robotics</p>
-  </>
-)}
-function RobotCard({robotName,rentalPrice,robotLocation,children}){
-  const [bookings,setbookings] = useState(0)
-  function increaseBooking(){
-    setbookings(
-      bookings + 1
-    )
-  }
-  function decreaseBooking(){
-    if(bookings > 0){
-      setbookings(
-        bookings - 1
-      )
-    }
-  }
-  return(
-    <>
-    <h2>{robotName}</h2>
-    <p>₹{rentalPrice} / day</p>
-    <p>{robotLocation}</p>
-    {children}
-    <p>Bookings : {bookings}</p>
-    <button onClick={increaseBooking}> . Book</button>
-    <button onClick={decreaseBooking}> . Remove</button>
-    </>
-    
-)}  
+import { useState } from "react";
+const robots = [
+  {
+    id: 1,
+    name: "NILA",
+    location: "Kozhikode",
+    available: true,
+  },
+  {
+    id: 2,
+    name: "APEX",
+    location: "Kannur",
+    available: false,
+  },
+  {
+    id: 3,
+    name: "Lisa",
+    location: "Malappuram",
+    available: true,
+  },
+  {
+    id: 4,
+    name: "Robot Dog",
+    location: "Kochi",
+    available: true,
+  },
+  {
+    id: 5,
+    name: "Drone X1",
+    location: "Thrissur",
+    available: false,
+  },
+];
 
 function App() {
+const [search, setSearch] = useState("");
   return (
     <>
-      <RobuverseRental />
-
-      <RobotCard
-        robotName="Stalker"
-        rentalPrice={25000}
-        robotLocation="Kannur"
-      >
-        ⭐ Best for Tech Fests
-      </RobotCard>
-
-      <RobotCard
-        robotName="MJ Replics"
-        rentalPrice={45000}
-        robotLocation="Kollam"
-      >
-        🔥 Most Popular Rental
-      </RobotCard>
-
-      <RobotCard
-        robotName="Optimus Prime"
-        rentalPrice={95000}
-        robotLocation="Malappuram"
-      >
-        ⚡ Premium Experience
-      </RobotCard>
+      <h1>🤖 RobuVerse Search</h1>
+      <input
+  type="text"
+  placeholder="Search robots..."
+  value={search}
+  onChange={(e) => setSearch(e.target.value)}
+/>
+      {robots.filter((robot) => 
+        robot.name.toLowerCase().includes(search.toLowerCase()) || robot.location.toLowerCase().includes(search.toLowerCase())).map((robot) => (
+        <div key={robot.id}>
+        <h2>🤖 {robot.name}</h2>
+        <h3>📍 {robot.location}</h3>
+        <hr />
+        </div>
+      ))}
     </>
   );
 }
 
-export default App
+export default App;
